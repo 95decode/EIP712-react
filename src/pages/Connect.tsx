@@ -38,7 +38,7 @@ function Connect() {
             return receipt.transactionHash;
         } catch (error) {
             console.log(error);
-            return
+            return error;
         }
     }
 
@@ -49,6 +49,78 @@ function Connect() {
         return new ethers.Contract(a, b, library.getSigner());
     }
 
+    const sign = async () => {
+        const domain = {
+            name: 'SignTypedData Test',
+            version: '1',
+            chainId: 5,
+            verifyingContract: '0x44274669d47Ca48b20652a1Da0a9d52B7aa89b92'
+        };
+
+        const types = {
+            Test: [
+                { name: 'TYPE_A', type: 'A' },
+                { name: 'TYPE_B', type: 'B' },
+                { name: 'TYPE_C', type: 'C' }
+            ],
+            A: [
+                { name: 'type_a', type: 'string' },
+                { name: 'value', type: 'address' }
+            ],
+            B: [
+                { name: 'type_b', type: 'string' },
+                { name: 'value', type: 'uint256' }
+            ],
+            C: [
+                { name: 'type_c', type: 'string' }
+            ]
+        };
+
+        const test = {
+            TYPE_A: {
+                type_a: "this is type a",
+                value: "0x2111111111111111111111111111111111111111"
+            },
+            TYPE_B: {
+                type_b: "this is type b",
+                value: 123456789
+            },
+            TYPE_C: {
+                type_c: "this is type c"
+            }
+        };
+
+        let v = library.getSigner();
+        console.log(await v._signTypedData(domain, types, test));
+        return
+    }
+
+/*
+        EIP712Domain: [
+                { name: 'name', type: 'string' },
+                { name: 'version', type: 'string' },
+                { name: 'chainId', type: 'uint256' },
+                { name: 'verifyingContract', type: 'address' },
+            ],...
+
+        const method = "eth_signTypedData_v4";
+
+        const msgParams = JSON.stringify({
+            domain: domain,
+            message: types,
+            primaryType: 'Test',
+            types: test
+        })
+
+        const params = [account, msgParams];
+
+        await v.send({
+            method,
+            params,
+            form: account
+        });
+        */
+
     return (
         <div>
             <div>
@@ -58,6 +130,7 @@ function Connect() {
             <div>
                 <button type="button" onClick={handleConnect}>{active ? 'disconnect':'connect'}</button>
                 <button type="button" onClick={test}>test</button>
+                <button type="button" onClick={sign}>sign</button>
             </div>
         </div>
     );
