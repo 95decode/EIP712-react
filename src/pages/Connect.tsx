@@ -1,4 +1,6 @@
 import { useWeb3React } from '@web3-react/core';
+import { ethers } from "ethers";
+import ABI from "abi/abi.json";
 import injected from 'lib/connectors';
 
 function Connect() {
@@ -6,6 +8,7 @@ function Connect() {
         chainId,
         account,
         active,
+        library,
         activate,
         deactivate
     } = useWeb3React();
@@ -24,6 +27,28 @@ function Connect() {
         });
     }
 
+    const test = async () => {
+        try {
+            const contract = getContract();
+
+            const tx = await contract.A(3);
+
+            const receipt = await tx.wait();
+            console.log(receipt);
+            return receipt.transactionHash;
+        } catch (error) {
+            console.log(error);
+            return
+        }
+    }
+
+    const getContract = () => {
+        // test contracts
+        let a = "0x44274669d47Ca48b20652a1Da0a9d52B7aa89b92";
+        let b = ABI;
+        return new ethers.Contract(a, b, library.getSigner());
+    }
+
     return (
         <div>
             <div>
@@ -32,6 +57,7 @@ function Connect() {
             </div>
             <div>
                 <button type="button" onClick={handleConnect}>{active ? 'disconnect':'connect'}</button>
+                <button type="button" onClick={test}>test</button>
             </div>
         </div>
     );
