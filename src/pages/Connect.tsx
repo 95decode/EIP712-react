@@ -4,6 +4,7 @@ import { useWeb3React } from '@web3-react/core';
 import { ethers } from "ethers";
 import ABI from "abi/abi.json";
 import Header from 'components/Header';
+import contracts from 'lib/contracts';
 
 function Connect() {
     const {
@@ -29,10 +30,7 @@ function Connect() {
     }
 
     const getContract = () => {
-        // test contracts
-        let a = "0xF6B2A43fCea7D73fDa9Df7D7b1f3A07490B0460C";
-        let b = ABI;
-        return new ethers.Contract(a, b, library.getSigner());
+        return new ethers.Contract(contracts.test, ABI, library.getSigner());
     }
 
     const signV3 = async () => {
