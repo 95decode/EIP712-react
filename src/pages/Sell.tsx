@@ -5,7 +5,7 @@ import { useWeb3React } from '@web3-react/core';
 import seaportAbi from "abi/seaport.json";
 import { ethers } from "ethers";
 import types from "lib/signTypedData";
-import contracts from "lib/contracts";
+import address from "lib/address";
 
 function Sell() {
     const {
@@ -18,7 +18,7 @@ function Sell() {
             name: 'Seaport',
             version: '1.1',
             chainId: 5,
-            verifyingContract: contracts.seaport
+            verifyingContract: address.seaport
         };
             
         const message = {
@@ -79,7 +79,7 @@ function Sell() {
 
     const sell = async ()=> {
         try {
-            let contract = new ethers.Contract(contracts.seaport, seaportAbi, library.getSigner());
+            let contract = new ethers.Contract(address.seaport, seaportAbi, library.getSigner());
 
             //consideration 서명 내용 포함
             let basicOrderParameters = {
@@ -128,10 +128,10 @@ function Sell() {
         <div>
             <Header />
             <div>
-                <p>Seaport : {contracts.seaport}</p>
-                <p>Conduit : {contracts.conduit}</p>
-                <p>ERC20 : {contracts.erc20}</p>
-                <p>ERC721 : {contracts.erc721}</p>
+                <p>Seaport : {address.seaport}</p>
+                <p>Conduit : {address.conduit}</p>
+                <p>ERC20 : {address.erc20}</p>
+                <p>ERC721 : {address.erc721}</p>
             </div>
             <div>
                 <p>구매자 sign </p>
