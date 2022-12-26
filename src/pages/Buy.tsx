@@ -4,7 +4,6 @@ import seaportAbi from "abi/seaport.json";
 import { BigNumber, ethers } from "ethers";
 import types from "lib/signTypedData";
 import address from "lib/address";
-import zero from "lib/zero";
 import extraData from "lib/extraData";
 import { useState } from "react";
 
@@ -15,8 +14,8 @@ function Buy() {
     } = useWeb3React();
 
     const [inputs, setInputs] = useState({
-        amount: '',
-        tokenId: ''
+        amount: "",
+        tokenId: ""
     });
 
     const [signature, setSignature] = useState("");
@@ -76,7 +75,7 @@ function Buy() {
             orderType: 0,
             startTime: 1,
             endTime: 100000000000000,
-            zoneHash: zero.bytes32,
+            zoneHash: extraData.zeroBytes,
             salt: extraData.salt,
             conduitKey: extraData.conduitKey,
             counter: 0
@@ -117,7 +116,7 @@ function Buy() {
                 basicOrderType: 0,
                 startTime: 1,
                 endTime: 100000000000000,
-                zoneHash: zero.bytes32,
+                zoneHash: extraData.zeroBytes,
                 salt: extraData.salt,
                 offererConduitKey: extraData.conduitKey,
                 fulfillerConduitKey: extraData.conduitKey,
@@ -130,7 +129,7 @@ function Buy() {
             };
 
             // MUST update channel to true
-
+            
             const tx = await contract.fulfillBasicOrder(basicOrderParameters, {
                 value: amount,
                 gasLimit: 200000
