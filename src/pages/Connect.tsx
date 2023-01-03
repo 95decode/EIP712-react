@@ -94,49 +94,38 @@ function Connect() {
                 { name: 'chainId', type: 'uint256' },
                 { name: 'verifyingContract', type: 'address' },
             ],
-            Test: [
-                { name: 'TYPE_A', type: 'A' },
-                { name: 'TYPE_B', type: 'B' },
-                { name: 'TYPE_C', type: 'C' },
-                { name: 'TYPE_D', type: 'D' },
+            MainType: [
+                { name: "SubTypeAKey", type: "SubTypeA" },
+                { name: "SubTypeBKey", type: "SubTypeB[]" },
             ],
-            A: [
-                { name: 'type_a', type: 'string' },
-                { name: 'value', type: 'address' }
+            SubTypeA: [
+                { name: "stringKey", type: "string" },
+                { name: "addressKey", type: "address" },
             ],
-            B: [
-                { name: 'type_b', type: 'string' },
-                { name: 'value', type: 'uint256' }
+            SubTypeB: [
+                { name: "uint256Key", type: "uint256" },
+                { name: "addressKey", type: "address" },
             ],
-            C: [
-                { name: 'type_c', type: 'string' }
-            ],
-            D: [
-                { name: 'type_d', type: 'uint256[]'}
-            ]
         };
 
         const test = {
-            TYPE_A: {
-                type_a: "this is type a",
-                value: "0x2111111111111111111111111111111111111111"
+            SubTypeAKey: {
+                stringKey: "testString",
+                addressKey: "0x44274669d47Ca48b20652a1Da0a9d52B7aa89b92"
             },
-            TYPE_B: {
-                type_b: "this is type b",
-                value: 123456789
-            },
-            TYPE_C: {
-                type_c: "this is type c"
-            },
-            TYPE_D: {
-                type_d: [1, 3, 5, 7]
-            }
+            SubTypeBKey: [{
+                uint256Key: 100,
+                addressKey: "0x44274669d47Ca48b20652a1Da0a9d52B7aa89b92"
+            },{
+                uint256Key: 200,
+                addressKey: "0x44274669d47Ca48b20652a1Da0a9d52B7aa89b92"
+            }]
         }
 
         const msgParams = JSON.stringify({
             domain: domain,
             message: test,
-            primaryType: 'Test',
+            primaryType: 'MainType',
             types: types
         })
 
